@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "notes": "romaji is what the app shows. ja is only fed to the Japanese voice so it pronounces correctly; it is never displayed. list: speak = phrases to say on demand, listen = words to recognize.",
+  "batches": [
+    {
+      "id": "b1",
+      "title": "Survival & understanding",
+      "list": "speak",
+      "items": [
+        { "id": "b1-01", "romaji": "Wakaranai", "english": "I don't understand", "ja": "わからない" },
+        { "id": "b1-02", "romaji": "Wakarimashita / Wakatta", "english": "Got it (polite / casual)", "ja": "わかりました。わかった。" },
+        { "id": "b1-03", "romaji": "Mō ichido itte", "english": "Say it again", "ja": "もう いちど いって" },
+        { "id": "b1-04", "romaji": "Yukkuri onegaishimasu", "english": "Slowly, please", "ja": "ゆっくり おねがいします" },
+        { "id": "b1-05", "romaji": "Chotto matte", "english": "Wait a sec", "ja": "ちょっと まって" },
+        { "id": "b1-06", "romaji": "Eigo wakaru?", "english": "Do you know English?", "ja": "えいご わかる？" },
+        { "id": "b1-07", "romaji": "Kore tte dō iu imi?", "english": "What does this mean? (swap kore for the word)", "ja": "これって どういう いみ？" },
+        { "id": "b1-08", "romaji": "Nihongo chotto dake", "english": "Just a little Japanese", "ja": "にほんご ちょっと だけ" },
+        { "id": "b1-09", "romaji": "Sumimasen", "english": "Excuse me / sorry", "ja": "すみません" },
+        { "id": "b1-10", "romaji": "Arigatō", "english": "Thanks", "ja": "ありがとう" },
+        { "id": "b1-11", "romaji": "Onegaishimasu", "english": "Please / I'd like that", "ja": "おねがいします" }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "Reactions",
+      "list": "speak",
+      "items": [
+        { "id": "b2-01", "romaji": "Un / Ē", "english": "Yeah", "ja": "うん。ええ。" },
+        { "id": "b2-02", "romaji": "Uun", "english": "No", "ja": "ううん" },
+        { "id": "b2-03", "romaji": "Sō desu ne", "english": "That's right / let me think", "ja": "そうですね" },
+        { "id": "b2-04", "romaji": "Hontō?", "english": "Really?", "ja": "ほんとう？" },
+        { "id": "b2-05", "romaji": "Sugoi", "english": "Amazing", "ja": "すごい" },
+        { "id": "b2-06", "romaji": "Yabai", "english": "Crazy (good or bad)", "ja": "やばい" },
+        { "id": "b2-07", "romaji": "Daijōbu", "english": "It's fine / I'm OK", "ja": "だいじょうぶ" },
+        { "id": "b2-08", "romaji": "Ii yo", "english": "Sure, that's fine", "ja": "いいよ" },
+        { "id": "b2-09", "romaji": "Chigau", "english": "That's different / no", "ja": "ちがう" },
+        { "id": "b2-10", "romaji": "Mā mā", "english": "So-so", "ja": "まあまあ" }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Questions",
+      "list": "speak",
+      "items": [
+        { "id": "b3-01", "romaji": "Kore nani?", "english": "What's this?", "ja": "これ なに？" },
+        { "id": "b3-02", "romaji": "Doko?", "english": "Where?", "ja": "どこ？" },
+        { "id": "b3-03", "romaji": "Itsu?", "english": "When?", "ja": "いつ？" },
+        { "id": "b3-04", "romaji": "Dare?", "english": "Who?", "ja": "だれ？" },
+        { "id": "b3-05", "romaji": "Ikura?", "english": "How much?", "ja": "いくら？" },
+        { "id": "b3-06", "romaji": "Doko ni arimasu ka?", "english": "Where is it?", "ja": "どこに ありますか？" },
+        { "id": "b3-07", "romaji": "Doko ni iku no?", "english": "Where are you going?", "ja": "どこに いくの？" }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Daily situations",
+      "list": "speak",
+      "items": [
+        { "id": "b4-01", "romaji": "Fukuro wa iranai desu", "english": "No bag needed (konbini)", "ja": "ふくろは いらないです" },
+        { "id": "b4-02", "romaji": "Atatamete kudasai", "english": "Heat it up, please (konbini)", "ja": "あたためて ください" },
+        { "id": "b4-03", "romaji": "Kore kudasai", "english": "This one, please (restaurant)", "ja": "これ ください" },
+        { "id": "b4-04", "romaji": "Oishii", "english": "Delicious", "ja": "おいしい" },
+        { "id": "b4-05", "romaji": "Shibuya ni ikimasu ka?", "english": "Does this go to Shibuya? (swap the station)", "ja": "しぶやに いきますか？" },
+        { "id": "b4-06", "romaji": "Doko de orimasu ka?", "english": "Where do I get off? (train)", "ja": "どこで おりますか？" },
+        { "id": "b4-07", "romaji": "Ohayō / Konnichiwa / Konbanwa", "english": "Morning / hello / evening", "ja": "おはよう。こんにちは。こんばんは。" },
+        { "id": "b4-08", "romaji": "Ogenki desu ka?", "english": "How are you?", "ja": "おげんき ですか？" },
+        { "id": "b4-09", "romaji": "Genki desu", "english": "I'm good", "ja": "げんき です" }
+      ]
+    },
+    {
+      "id": "b5",
+      "title": "Core verbs",
+      "list": "listen",
+      "items": [
+        { "id": "b5-01", "romaji": "suru", "english": "to do", "ja": "する" },
+        { "id": "b5-02", "romaji": "iku", "english": "to go", "ja": "いく" },
+        { "id": "b5-03", "romaji": "kuru", "english": "to come", "ja": "くる" },
+        { "id": "b5-04", "romaji": "taberu", "english": "to eat", "ja": "たべる" },
+        { "id": "b5-05", "romaji": "nomu", "english": "to drink", "ja": "のむ" },
+        { "id": "b5-06", "romaji": "miru", "english": "to see / watch", "ja": "みる" },
+        { "id": "b5-07", "romaji": "iu", "english": "to say", "ja": "いう" },
+        { "id": "b5-08", "romaji": "omou", "english": "to think", "ja": "おもう" },
+        { "id": "b5-09", "romaji": "wakaru", "english": "to understand", "ja": "わかる" },
+        { "id": "b5-10", "romaji": "aru", "english": "to exist (things)", "ja": "ある" },
+        { "id": "b5-11", "romaji": "iru", "english": "to exist (people, animals)", "ja": "いる" }
+      ]
+    },
+    {
+      "id": "b6",
+      "title": "Particles",
+      "list": "listen",
+      "items": [
+        { "id": "b6-01", "romaji": "wa", "english": "topic marker (as for…)", "ja": "わ" },
+        { "id": "b6-02", "romaji": "ga", "english": "subject marker", "ja": "が" },
+        { "id": "b6-03", "romaji": "o", "english": "object marker", "ja": "を" },
+        { "id": "b6-04", "romaji": "ni", "english": "to / at (time, place, target)", "ja": "に" },
+        { "id": "b6-05", "romaji": "de", "english": "at / by means of", "ja": "で" },
+        { "id": "b6-06", "romaji": "no", "english": "'s / of", "ja": "の" },
+        { "id": "b6-07", "romaji": "to", "english": "and / with", "ja": "と" },
+        { "id": "b6-08", "romaji": "mo", "english": "also / too", "ja": "も" },
+        { "id": "b6-09", "romaji": "e", "english": "toward", "ja": "え" },
+        { "id": "b6-10", "romaji": "kara", "english": "from / because", "ja": "から" },
+        { "id": "b6-11", "romaji": "made", "english": "until / up to", "ja": "まで" },
+        { "id": "b6-12", "romaji": "ka", "english": "question marker", "ja": "か" },
+        { "id": "b6-13", "romaji": "ne", "english": "right? / isn't it?", "ja": "ね" },
+        { "id": "b6-14", "romaji": "yo", "english": "I'm telling you (emphasis)", "ja": "よ" },
+        { "id": "b6-15", "romaji": "na", "english": "casual 'right?' / softener", "ja": "な" }
+      ]
+    },
+    {
+      "id": "b7",
+      "title": "Pointing & question words",
+      "list": "listen",
+      "items": [
+        { "id": "b7-01", "romaji": "kore", "english": "this (near me)", "ja": "これ" },
+        { "id": "b7-02", "romaji": "sore", "english": "that (near you)", "ja": "それ" },
+        { "id": "b7-03", "romaji": "are", "english": "that (over there)", "ja": "あれ" },
+        { "id": "b7-04", "romaji": "nani / nan", "english": "what", "ja": "なに。なん。" },
+        { "id": "b7-05", "romaji": "dō", "english": "how", "ja": "どう" },
+        { "id": "b7-06", "romaji": "nande", "english": "why (casual)", "ja": "なんで" }
+      ]
+    },
+    {
+      "id": "b8",
+      "title": "Fillers & casual words",
+      "list": "listen",
+      "items": [
+        { "id": "b8-01", "romaji": "E?", "english": "Huh? / what?", "ja": "え？" },
+        { "id": "b8-02", "romaji": "Mā", "english": "Well… / I guess", "ja": "まあ" },
+        { "id": "b8-03", "romaji": "Ano…", "english": "Um… (getting attention)", "ja": "あの" },
+        { "id": "b8-04", "romaji": "Ēto…", "english": "Uhh… (thinking)", "ja": "ええと" },
+        { "id": "b8-05", "romaji": "ii", "english": "good", "ja": "いい" },
+        { "id": "b8-06", "romaji": "suki", "english": "like / love", "ja": "すき" },
+        { "id": "b8-07", "romaji": "hontō ni", "english": "really / truly", "ja": "ほんとうに" },
+        { "id": "b8-08", "romaji": "maji?", "english": "seriously?", "ja": "まじ？" },
+        { "id": "b8-09", "romaji": "meccha", "english": "super / very", "ja": "めっちゃ" }
+      ]
+    },
+    {
+      "id": "b9",
+      "title": "Casual contractions",
+      "list": "listen",
+      "items": [
+        { "id": "b9-01", "romaji": "Tabeteru", "english": "(I'm) eating — -teru = -te iru, doing now", "ja": "たべてる" },
+        { "id": "b9-02", "romaji": "Nani shiteru no?", "english": "What are you doing?", "ja": "なに してるの？" },
+        { "id": "b9-03", "romaji": "Ii jan", "english": "That's good, isn't it! (-jan = isn't it)", "ja": "いいじゃん" },
+        { "id": "b9-04", "romaji": "Tabechatta", "english": "I ate it all / oops, ate it (-chatta = did it, completely or by accident)", "ja": "たべちゃった" },
+        { "id": "b9-05", "romaji": "Wasurechatta", "english": "I forgot (oops)", "ja": "わすれちゃった" },
+        { "id": "b9-06", "romaji": "Ikanakya", "english": "I've got to go (-nakya = have to)", "ja": "いかなきゃ" },
+        { "id": "b9-07", "romaji": "Sō nan da", "english": "Oh, I see / is that so", "ja": "そうなんだ" }
+      ]
+    }
+  ]
+}
