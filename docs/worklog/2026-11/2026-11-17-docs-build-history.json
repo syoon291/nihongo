@@ -1,0 +1,1 @@
+{"date": "2026-11-17", "project": "nihongo", "summary": "Added docs/plans/2026-11-16-build-history.md, a record of how Nihongo Ears was built (the brief, the decisions, and the first build through PRs #1 and #2), and indexed plans/ in the architecture hub.", "pr": 3, "why": "The owner wanted a lasting record of how the app was built, kept beside its docs."}

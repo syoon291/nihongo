@@ -59,6 +59,7 @@ How they relate: `index.html` loads `styles.css` and `app.js` (as a module). On 
 | [Deployment](deployment.md) | GitHub Pages, the service worker cache, release behavior |
 | [docsic.json](docsic.json) | Machine-read release facts (not a document) |
 | [gate.json](gate.json) | Docs-gate config: files no doc needs to follow (not a document) |
+| [plans/](plans/) | Dated history and plans; `done` ones are a record, not current truth (e.g. how the app was built) |
 
 ## Current Scope
 
