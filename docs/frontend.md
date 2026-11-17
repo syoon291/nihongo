@@ -7,14 +7,15 @@ status: current
 
 # Frontend
 
-The whole app is `app.js`, rendered into the one `<main id="view">` element of `index.html`. There are no URL routes: the bottom bar switches between five sections, and each re-renders the view from current state.
+The whole app is `app.js`, rendered into the one `<main id="view">` element of `index.html`. There are no URL routes: the bottom bar switches between five sections (plus the Practice screen, opened from Learn), and each re-renders the view from current state.
 
 ## Sections
 
 | Tab | What it does |
 |-----|--------------|
 | Home | Greeting by time of day, due count, a "Learn next" button for the first unfinished batch, stats (due today, learned, new today), speaking-phrase progress bar, a 7-day activity chart, and the Settings & backup panel |
-| Learn | Batch list with progress and a speak/listen tag. Inside a batch: each new card plays its audio, the learner says it twice, then adds it to review or skips. A finished batch can be browsed again without adding cards |
+| Learn | Batch list with progress and a speak/listen tag; listen batches also have a Practice button, and a Listening practice card below the list starts a session of up to 15 learned listen words (needs at least 2). Inside a batch: each new card plays its audio, the learner says it twice, then adds it to review or skips. A finished batch can be browsed again without adding cards |
+| Practice (from Learn) | Listening practice for listen words. The word plays, the learner picks its meaning from four choices (distractors from the same batch first, then any listen word). Right turns green, a wrong pick red, the romaji appears, and a wrong pick replays the word; a missed word comes back once at the end. Never touches review cards; each pick counts as activity (`practiced`). Without a Japanese voice the romaji shows up front instead. The Learn tab stays highlighted |
 | Review | Due cards in random order. Direction is a setting: *Hear → meaning* (audio first), *Meaning → say it* (English first, audio after reveal), or *Mix*. Grades Again / Hard / Good / Easy, each showing its next interval. Again puts the card back at the end of the session |
 | Speak | Shadowing. Pick "my learned phrases" (up to 15, shuffled) or any speak batch. Each phrase plays, then a "your turn" bar runs for about 1.6x the phrase's spoken length, then the learner rates it Again / Close / Nailed it |
 | Real life | Word catcher (romaji guess, optional meaning and note; can be added to review), "Used it today" list of learned speak phrases with an optional note, and a recent-use log |
@@ -28,7 +29,7 @@ One object, saved as JSON in `localStorage` under the key `nihongo.v1` after eve
 | Field | Shape | Meaning |
 |-------|-------|---------|
 | `cards` | id → `{ reps, ease, interval, due, lapses, learnedAt }` | One entry per card in review. Ids are content item ids, or `c-<id>` for a caught word |
-| `activity` | day → `{ reviews, learned, spoken, used }` | Daily counters; drive the streak and the weekly chart |
+| `activity` | day → `{ reviews, learned, spoken, used, practiced }` | Daily counters; drive the streak and the weekly chart |
 | `used` | `[{ id, day, note }]` | Real-life use log |
 | `catches` | `[{ id, romaji, english, note, day, inReview }]` | Caught words; `id` is a timestamp |
 | `settings` | `{ newPerDay, direction, rate, voice }` | Defaults: 20 per day, `listen`, rate 0.9, automatic voice |

@@ -35,4 +35,10 @@ const shell = readFileSync("sw.js", "utf8").match(/const SHELL = (\[[^\]]*\])/);
 if (!shell) fail("could not find the SHELL list in sw.js");
 for (const f of JSON.parse(shell[1])) if (f !== "./" && !existsSync(f)) fail(`sw.js precaches ${f}, which does not exist`);
 
-console.log(`ok: scripts parse, ${data.batches.length} batches / ${seen.size - data.batches.length} items, service worker shell complete`);
+// The Pages workflow copies an explicit file list into the site: every precached file must be in it.
+const wf = readFileSync(".github/workflows/pages.yml", "utf8").match(/cp -R ([^\n]*) _site\//);
+if (!wf) fail("could not find the site copy step in .github/workflows/pages.yml");
+const staged = wf[1].trim().split(/\s+/);
+for (const f of JSON.parse(shell[1])) if (f !== "./" && !staged.includes(f.split("/")[0])) fail(`sw.js precaches ${f}, but the Pages workflow does not copy it into the site`);
+
+console.log(`ok: scripts parse, ${data.batches.length} batches / ${seen.size - data.batches.length} items, service worker shell complete and published`);
