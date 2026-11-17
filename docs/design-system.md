@@ -30,6 +30,7 @@ Shape and depth: `--radius` for cards and buttons, `--shadow` for raised surface
 - **Card** (`.card`), with `.flash` for the big study card (romaji large, English under it, a hint line) and `.empty` for end-of-session and empty states.
 - **Buttons** (`.btn`): `.primary`, `.ghost`, `.sm`, `.block` (full width). Grade rows (`.grades`) are an equal-width grid.
 - **Play button** (`.play`): the round audio control on study cards.
+- **Answer choices** (`.choices`): a stacked grid of `.btn`s for listening practice; after a pick they are disabled, the right one marked `.right` (`--good`), a wrong pick `.wrong` (`--accent`), the rest dimmed.
 - **Lists** (`.list`, `.batch-btn`) with a trailing `.tag` (`.good` variant).
 - **Segmented control** (`.seg`) for review direction; `aria-pressed` marks the choice.
 - **Progress** (`.progress`), weekly bars (`.bars`), the shadowing turn bar (`.turn`, animated over `--dur`).

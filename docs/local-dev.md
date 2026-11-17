@@ -31,7 +31,7 @@ To try it on a phone, serve on your machine and open the machine's LAN address f
 
 ## Testing
 
-The fast check (`stacks` in `.claude/test-manifest.json`) confirms that `app.js` and `sw.js` parse, that `content.json` is well formed (every item has `id`, `romaji`, `english`, `ja`; ids unique; `list` is `speak` or `listen`), and that every file the service worker precaches exists. Run it after any change.
+The fast check (`stacks` in `.claude/test-manifest.json`) confirms that `app.js` and `sw.js` parse, that `content.json` is well formed (every item has `id`, `romaji`, `english`, `ja`; ids unique; `list` is `speak` or `listen`), that every file the service worker precaches exists, and that the Pages workflow's site copy step includes each of them. Run it after any change; CI (`.github/workflows/pages.yml`) runs the same check on every pull request, so the manifest marks the stack `"ci": "pr"`.
 
 There are no UI tests. A change to what a section shows needs a look in a browser.
 

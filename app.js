@@ -13,7 +13,7 @@ const today = () => dayKey();
 // ------------------------------------------------------------------ state
 const blank = () => ({
   cards: {},        // id -> { reps, ease, interval, due, lapses, learnedAt }
-  activity: {},     // day -> { reviews, learned, spoken, used }
+  activity: {},     // day -> { reviews, learned, spoken, used, practiced }
   used: [],         // { id, day, note }
   catches: [],      // { id, romaji, english, note, day, inReview }
   settings: { newPerDay: 20, direction: "listen", rate: 0.9, voice: "" },
@@ -35,7 +35,7 @@ function save() {
 }
 function bump(field, n = 1) {
   const d = today();
-  const a = (state.activity[d] ||= { reviews: 0, learned: 0, spoken: 0, used: 0 });
+  const a = (state.activity[d] ||= { reviews: 0, learned: 0, spoken: 0, used: 0, practiced: 0 });
   a[field] = (a[field] || 0) + n;
 }
 
@@ -107,7 +107,7 @@ const learnedToday = () => state.activity[today()]?.learned || 0;
 
 function streak() {
   let n = 0, d = today();
-  const active = (k) => { const a = state.activity[k]; return a && (a.reviews || a.learned || a.spoken || a.used); };
+  const active = (k) => { const a = state.activity[k]; return a && (a.reviews || a.learned || a.spoken || a.used || a.practiced); };
   if (!active(d)) d = addDays(d, -1); // today not started yet doesn't break the streak
   while (active(d)) { n++; d = addDays(d, -1); }
   return n;
@@ -146,13 +146,13 @@ function go(next, opts = {}) {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   clearTimeout(speakTimer);
   tab = next; session = opts.session ?? null;
-  for (const b of document.querySelectorAll(".tabs button")) b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false");
+  for (const b of document.querySelectorAll(".tabs button")) b.setAttribute("aria-current", b.dataset.tab === (tab === "practice" ? "learn" : tab) ? "page" : "false");
   render();
   window.scrollTo(0, 0);
 }
 function render() {
   updateChrome();
-  const views = { home: viewHome, learn: viewLearn, review: viewReview, speak: viewSpeak, life: viewLife };
+  const views = { home: viewHome, learn: viewLearn, review: viewReview, speak: viewSpeak, life: viewLife, practice: viewPractice };
   $view.innerHTML = views[tab]();
 }
 
@@ -163,7 +163,7 @@ function viewHome() {
   const due = dueIds().length;
   const nb = nextBatch();
   const days = Array.from({ length: 7 }, (_, i) => addDays(today(), i - 6));
-  const counts = days.map((d) => { const a = state.activity[d] || {}; return (a.reviews || 0) + (a.learned || 0) + (a.spoken || 0); });
+  const counts = days.map((d) => { const a = state.activity[d] || {}; return (a.reviews || 0) + (a.learned || 0) + (a.spoken || 0) + (a.practiced || 0); });
   const max = Math.max(5, ...counts);
   const dow = (k) => ["S", "M", "T", "W", "T", "F", "S"][new Date(k + "T12:00:00").getDay()];
   const speakTotal = [...items.values()].filter((i) => i.list === "speak").length;
@@ -242,6 +242,7 @@ function settingsHTML() {
 function viewLearn() {
   if (session?.batch) return viewLearnCard();
   const left = Math.max(0, state.settings.newPerDay - learnedToday());
+  const learnedListen = learnedListenIds().length;
   return `
   <h2>Learn</h2>
   <p class="sub">${left ? `${left} new card${left === 1 ? "" : "s"} left in today's goal.` : "Today's new-card goal is done. Extra is fine, but reviews matter more."} Speak batches are phrases to say; listen batches are words to recognize.</p>
@@ -250,8 +251,14 @@ function viewLearn() {
       <li><button class="batch-btn" data-learn="${b.id}">
         <span class="t"><b>${esc(b.title)}</b><span>${p.n}/${p.total} learned</span></span>
         <span class="tag ${b.list === "speak" ? "good" : ""}">${b.list}</span>
-      </button></li>`; }).join("")}
-  </ul>`;
+      </button>${b.list === "listen" ? `<button class="btn sm" data-practice="${b.id}" aria-label="Practice ${esc(b.title)}">Practice</button>` : ""}</li>`; }).join("")}
+  </ul>
+  <h3>Listening practice</h3>
+  <div class="card stack">
+    <p class="small muted" style="margin:0">Hear a word, pick what it means. Just practice: your review schedule doesn't change.</p>
+    <button class="btn primary block" data-practice="learned" ${learnedListen >= 2 ? "" : "disabled"}>Practice my learned words (${learnedListen})</button>
+    ${learnedListen >= 2 ? "" : `<p class="small muted center" style="margin:0">Learn a listen batch first, or tap Practice on one above.</p>`}
+  </div>`;
 }
 function startLearn(batchId) {
   const b = batches.find((x) => x.id === batchId);
@@ -386,6 +393,64 @@ async function runShadow() {
   speakTimer = setTimeout(() => { if (session === s) { s.phase = "rate"; render(); } }, s.dur);
 }
 
+// ------------------------------------------------------------------ PRACTICE (listen lists: hear it, pick the meaning)
+const listenItems = () => [...items.values()].filter((it) => it.list === "listen");
+const learnedListenIds = () => listenItems().filter((it) => state.cards[it.id]).map((it) => it.id);
+const shuffle = (a) => { const x = [...a]; for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; } return x; };
+function practiceChoices(id) {
+  const it = itemOf(id);
+  // Distractors come from the same batch first (similar words are the useful contrast), then any listen word.
+  const pool = (src) => shuffle(src.filter((x) => x.id !== id && x.english !== it.english));
+  const picks = [];
+  for (const x of [...pool(listenItems().filter((x) => x.batch === it.batch)), ...pool(listenItems())]) {
+    if (picks.length === 3) break;
+    if (!picks.some((p) => p.english === x.english)) picks.push(x);
+  }
+  return shuffle([it, ...picks]).map((x) => x.id);
+}
+function startPractice(source) {
+  const ids = source === "learned"
+    ? shuffle(learnedListenIds()).slice(0, 15)
+    : shuffle(batches.find((b) => b.id === source).items.map((it) => it.id));
+  const s = { source, queue: ids, i: 0, choices: practiceChoices(ids[0]), picked: null, right: 0, missed: 0, retried: new Set(), noAudio: false };
+  go("practice", { session: s });
+  playPractice(s);
+}
+async function playPractice(s) {
+  const ok = await speak(itemOf(s.queue[s.i]));
+  // speak() also resolves false when a newer utterance cancels this one (replay, Next), so only
+  // a missing Japanese voice means "no audio".
+  if (!ok && !jaVoice && session === s && !s.noAudio) { s.noAudio = true; render(); }
+}
+function viewPractice() {
+  const s = session;
+  const back = `<button class="btn sm ghost" data-go="learn">← Batches</button>`;
+  if (!s?.queue) return `${back}<div class="card empty" style="margin-top:10px"><b>Pick a list to practice</b>Listen batches are on the Learn tab.</div>`;
+  const { queue, i, picked, choices } = s;
+  if (i >= queue.length) {
+    return `<div class="card empty"><b>Practice done 👂</b>${s.right} right the first time${s.missed ? `, ${s.missed} missed (each came back once)` : ""}.
+      <div class="stack" style="margin-top:16px"><button class="btn primary block" data-practice="${esc(s.source)}">Again</button><button class="btn block" data-go="learn">Back to batches</button></div></div>`;
+  }
+  const id = queue[i];
+  const it = itemOf(id);
+  const answered = picked !== null;
+  return `
+  <div class="row">${back}<span class="spacer"></span><span class="muted small">${i + 1}/${queue.length}</span></div>
+  <div class="card flash" style="margin-top:10px">
+    <button class="play" data-play="${id}" aria-label="Play audio">${PLAY}</button>
+    ${answered || s.noAudio ? `<div class="romaji">${esc(it.romaji)}</div>` : ""}
+    <div class="hint">${answered ? (picked === id ? "Right." : "Not quite: listen once more.") : s.noAudio ? "No Japanese voice here, so read it instead. What does it mean?" : "What does it mean?"}</div>
+  </div>
+  <div class="choices" role="group" aria-label="Meanings">
+    ${choices.map((cid) => {
+      const c = itemOf(cid);
+      const cls = !answered ? "" : cid === id ? "right" : cid === picked ? "wrong" : "";
+      return `<button class="btn block ${cls}" data-pick="${cid}" ${answered ? "disabled" : ""}>${esc(c.english)}</button>`;
+    }).join("")}
+  </div>
+  ${answered ? `<button class="btn primary block" style="margin-top:12px" data-practice-next>Next</button>` : ""}`;
+}
+
 // ------------------------------------------------------------------ REAL LIFE (log + word catcher)
 function viewLife() {
   const learnedSpeak = [...items.values()].filter((it) => it.list === "speak" && state.cards[it.id]);
@@ -460,6 +525,30 @@ $view.addEventListener("click", (e) => {
     return;
   }
   if ("reviewAgain" in d) return go("review");
+
+  if (d.practice) return startPractice(d.practice);
+  if (d.pick) {
+    const s = session;
+    // Ignore a pick that is not for the question on screen: already answered, past the end,
+    // or a stale click on a previous question's button.
+    if (tab !== "practice" || !s?.queue || s.picked !== null || s.i >= s.queue.length || !s.choices.includes(d.pick)) return;
+    const id = s.queue[s.i];
+    s.picked = d.pick;
+    if (d.pick === id) { if (!s.retried.has(id)) s.right++; }
+    else if (!s.retried.has(id)) { s.missed++; s.retried.add(id); s.queue.push(id); }
+    bump("practiced"); save(); render();
+    if (d.pick !== id) speak(itemOf(id));
+    return;
+  }
+  if ("practiceNext" in d) {
+    const s = session;
+    // Next only advances an answered question; a stray or doubled click must not skip one.
+    if (tab !== "practice" || !s?.queue || s.picked === null) return;
+    s.i++; s.picked = null;
+    if (s.i < s.queue.length) { s.choices = practiceChoices(s.queue[s.i]); render(); playPractice(s); }
+    else render();
+    return;
+  }
 
   if (d.shadow) return startShadow(d.shadow);
   if ("shadowRestart" in d) return startShadow(session.source);

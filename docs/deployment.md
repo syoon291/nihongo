@@ -9,11 +9,13 @@ status: current
 
 ## Targets
 
-GitHub Pages, from the `main` branch, repo root (the classic "deploy from a branch" build, no workflow file). The public URL is in `docs/docsic.json` (`release.url`). The repo is public, and so is everything in it once it lands on `main`.
+GitHub Pages, published by the `Pages` GitHub Actions workflow (`.github/workflows/pages.yml`; the repo's Pages source is set to "GitHub Actions"). The public URL is in `docs/docsic.json` (`release.url`). The repo is public, so its source is readable by anyone, but only the app files are on the site.
 
 ## Build
 
-None. Pages publishes the files as they are. A merge to `main` is the release: GitHub runs its own "pages build and deployment" job, and the site updates within a minute or two.
+No compile step. The workflow's build job runs the fast check (`node scripts/check.mjs`), copies an explicit list of app files (`index.html`, `app.js`, `styles.css`, `sw.js`, `content.json`, `manifest.webmanifest`, `icons/`) into `_site/` and uploads it; docs, scripts and repo tooling are not published. A merge to `main` is the release: the deploy job publishes that artifact and the site updates within a minute or two. A manual run (`workflow_dispatch`) redeploys main.
+
+A new file the app loads must be added to that copy step. The fast check fails when a file `sw.js` precaches is missing from it.
 
 ## How updates reach learners
 
@@ -33,6 +35,6 @@ No env vars, secrets or backend.
 
 ## CI/CD
 
-No CI of its own. The Pages build is the only job on `main`. Run the fast check from `.claude/test-manifest.json` before pushing.
+The `Pages` workflow is the only CI. On a pull request it runs the build job (check + site artifact) without deploying, so a broken check shows on the PR. On `main` it builds and deploys; a deploy in progress is never cancelled by a newer push.
 
 [Back to Architecture](architecture.md)

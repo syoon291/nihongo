@@ -146,6 +146,14 @@ h3 { font-size: 15px; margin: 22px 0 8px; color: var(--muted); font-weight: 600;
 @keyframes fill { to { width: 100%; } }
 .status { font-weight: 600; min-height: 24px; }
 
+/* ---------- listening practice ---------- */
+.choices { display: grid; gap: 8px; margin-top: 12px; }
+.choices .btn { min-height: 52px; text-align: center; }
+.choices .btn:disabled { opacity: 1; }
+.choices .btn.right { border-color: var(--good); background: color-mix(in srgb, var(--good) 16%, var(--surface)); color: var(--good); }
+.choices .btn.wrong { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.choices .btn:disabled:not(.right):not(.wrong) { opacity: .5; }
+
 /* ---------- forms ---------- */
 label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
 input[type=text], input[type=number], textarea, select {
