@@ -1,0 +1,7 @@
+{
+  "updated": "2026-11-17",
+  "stacks": [],
+  "release": { "deploy": "push to main: GitHub Pages (legacy build, branch main, path /) publishes the repo as-is", "url": "https://syoon291.github.io/nihongo/" },
+  "env": {},
+  "notes": "Test command and dev server live only in .claude/test-manifest.json; this file keeps the release facts. No env vars, no secrets, no backend."
+}

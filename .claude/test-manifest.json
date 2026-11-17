@@ -1,0 +1,17 @@
+{
+  "updated": "2026-11-17",
+  "stacks": [
+    {
+      "name": "check",
+      "dir": ".",
+      "runner": "node",
+      "tier": "fast",
+      "testCommand": "node scripts/check.mjs",
+      "inputs": ["app.js", "sw.js", "content.json", "index.html", "styles.css", "manifest.webmanifest", "icons/**", "scripts/**", ".claude/test-manifest.json"]
+    }
+  ],
+  "ports": { "default": 8000 },
+  "devServer": { "command": "python3 -m http.server {port}", "port": "{port}", "baseUrl": "http://localhost:{port}" },
+  "routes": { "key": ["/"], "skip": [] },
+  "notes": "No build, no dependencies, no backend: a fresh worktree needs no setup. The app is one page; its sections (Home, Learn, Review, Speak, Real life) are tabs in the bottom bar, not URLs. Progress lives in the browser's localStorage under the key nihongo.v1, so a browser test starts from an empty profile. The service worker registers only over https, so it never runs on localhost. Audio is the browser's Japanese speech voice: a headless browser usually has none, which the app handles (no sound, a hint in Settings). There is no CI: GitHub Pages' own build is the only check on main."
+}

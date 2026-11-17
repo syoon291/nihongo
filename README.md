@@ -1,38 +1,22 @@
 # Nihongo Ears
 
-A personal Japanese **speaking and listening** trainer. Romaji only, audio first, built for a phone.
-
-**Open it:** https://syoon291.github.io/nihongo/ — then "Add to Home Screen" to install it like an app. It works offline after the first visit.
+A personal Japanese **speaking and listening** trainer: romaji only, audio first, built for a phone. It lives at https://syoon291.github.io/nihongo/ ("Add to Home Screen" installs it; it works offline after the first visit).
 
 ## What it does
 
-| Section | What it's for |
-| --- | --- |
-| **Home** | Streak, cards due today, words learned, speaking-phrase progress, a 7-day activity chart, settings and backup |
-| **Learn** | Go through a batch card by card: hear it, say it twice, add it to review |
-| **Review** | Spaced repetition (SM-2 style). *Hear → meaning* by default, or *meaning → say it*, or a mix |
-| **Speak** | Shadowing: the phrase plays, a "your turn" bar gives you time to repeat it out loud, then you rate yourself |
-| **Real life** | Log phrases you actually used on people, and catch words you hear in the wild to review later |
+- Learn phrase batches card by card: hear each one, say it out loud, add it to review.
+- Review with spaced repetition, either hearing the Japanese and recalling the meaning or seeing the meaning and saying it.
+- Shadow phrases out loud with a timed "your turn" prompt, then rate yourself.
+- Log phrases you actually used on people, and catch words you hear in the wild to review later.
+- Track a daily streak and a week of activity.
+- Keep everything on your device, with export and import for backup.
 
-## How it's built
+## Surfaces and stack
 
-- Plain HTML, CSS and JavaScript. No build step, no backend, no account.
-- Phrases live in [`content.json`](content.json): batches of items with `romaji`, `english` and `ja`. The `ja` (kana) field is never shown; it only tells the Japanese voice how to pronounce the phrase, because text-to-speech can't read romaji correctly.
-- Audio is the browser's built-in Japanese voice (Web Speech API). On iPhone, download a better one: **Settings → Accessibility → Spoken Content → Voices → Japanese**.
-- Progress is saved in this browser only (`localStorage`). Use **Home → Settings & backup → Export** now and then; **Import** restores it on a new phone.
-- `sw.js` caches the app for offline use; `manifest.webmanifest` makes it installable.
+- **Web app (PWA)**: plain HTML, CSS and JavaScript, the browser's Japanese speech voice for audio, `localStorage` for progress, a service worker for offline use. No build step, no backend, no account. Hosted on GitHub Pages.
 
-## Romaji rules used
+## Next
 
-- Vowels are always *a i u e o* (ah, ee, oo, eh, oh).
-- A doubled consonant (*chotto*, *matte*) is a tiny pause.
-- A macron (*ō*, *ū*) is a long vowel: *Arigatō*, *Daijōbu*.
-- Romaji hides pitch and rhythm, so always copy the audio.
-
-## Adding phrases
-
-Add items to a batch in `content.json` (or a new batch with `"list": "speak"` or `"listen"`). Keep each `id` unique and never change an existing one: progress is stored by id.
-
-## Ideas for later
-
-Recorded native audio files, streak reminders, more batches, an optional kana toggle.
+- [Architecture](docs/architecture.md): how it is built, and the index of every doc
+- [Local development](docs/local-dev.md): running and checking it locally
+- [Deployment](docs/deployment.md): how a change reaches the live site and installed apps

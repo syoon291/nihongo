@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    ".gitignore",
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md"
+  ]
+}
